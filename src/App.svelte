@@ -1,5 +1,10 @@
 <script>
   let cart = [];
+
+  // 추가
+  function addToCart(productId) {
+    cart = [...cart, productId];
+  }
 </script>
 
 <header class="header">
@@ -29,7 +34,7 @@
       </dl>
       <div>
         {#if !cart.includes("svelte-book")}
-          <button>장바구니 담기</button>
+          <button on:click={()=>addToCart('svelte-book')}>장바구니 담기</button>
         {:else}
           <button disabled> 장바구니 담기 완료</button>
         {/if}
