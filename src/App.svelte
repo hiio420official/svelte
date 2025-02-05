@@ -1,4 +1,35 @@
 <script>
+  import Slider from './Slider.svelte';
+  let product = {
+    id:"svelte-book",
+    name :"Svelte Book",
+    price : 30000,
+    images:[
+      "https://github.com/developer-book/svelte/raw/main/static/svelte-book-1.png",
+      "https://github.com/developer-book/svelte/raw/main/static/svelte-book-2.png",
+      "https://github.com/developer-book/svelte/raw/main/static/svelte-book-3.png",
+    ]
+  }
+
+
+  // 추가
+  let relatedProducts = [
+    {
+      id:"react-book",
+      name: "React Book",
+      price: 30000
+    },
+    {
+      id:"vue-book",
+      name: "Vue Book",
+      price: 30000
+    },
+    {
+      id:"angular-book",
+      name: "Angular Book",
+      price: 30000
+    },
+  ];
   let cart = [];
 
   // 추가
@@ -22,19 +53,17 @@
 <article class="product">
   <div class="product-main">
     <div class="image-container">
-      <img
-        src="https://github.com/developer-book/svelte/raw/main/static/svelte-book-1.png"
-      />
+      <Slider images={product.images} />
     </div>
     <div>
-      <h2>Sevelte Guide</h2>
+      <h2>{product.name}</h2>
       <dl>
         <dt>금액</dt>
-        <dd>30,000원</dd>
+        <dd>{product.price}원</dd>
       </dl>
       <div>
-        {#if !cart.includes("svelte-book")}
-          <button on:click={()=>addToCart('svelte-book')}>장바구니 담기</button>
+        {#if !cart.includes(product.id)}
+          <button on:click={()=>addToCart(product.id)}>장바구니 담기</button>
         {:else}
           <button disabled> 장바구니 담기 완료</button>
         {/if}
@@ -45,18 +74,13 @@
   <footer>
     <h3>관련상품</h3>
     <ul>
-      <li>
-        <a href="/products/react-book">React Book</a>
-        - 30,000원
-      </li>
-      <li>
-        <a href="/products/vue-book">Vue Book</a>
-        - 30,000원
-      </li>
-      <li>
-        <a href="/products/angular-book">Angular Book</a>
-        - 30,000원
-      </li>
+    <!--  <ul> 내부는 다음과 같이 변경-->
+      {#each relatedProducts as product}
+        <li>
+          <a href="/products/{product.id}">{product.name}</a>
+          {product.price}원
+        </li>
+      {/each}
     </ul>
   </footer>
 </article>
@@ -115,4 +139,6 @@
   .image-container img {
     width: 100%;
   }
+
+
 </style>
